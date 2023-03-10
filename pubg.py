@@ -1,5 +1,3 @@
-import random
-
 import telebot
 import config
 bot = telebot.TeleBot(config.pubginfo_t)
@@ -12,7 +10,8 @@ def keyboard_buttons():
     itembtn2 = KeyboardButton('Тест📄')
     itembtn3 = KeyboardButton('Обрати зброю🔫')
     itembtn4 = KeyboardButton('Карти🗺')
-    markup.add(itembtn1, itembtn2, itembtn3, itembtn4)
+    itembtn5 = KeyboardButton('Транспорт🚙')
+    markup.add(itembtn1, itembtn2, itembtn3, itembtn4, itembtn5)
     return markup
 
 def inlb():
@@ -181,9 +180,59 @@ def M():
     sr2 = InlineKeyboardButton('Мірамар', callback_data="miramar")
     sr3 = InlineKeyboardButton('Санук', callback_data="sanuk")
     sr4 = InlineKeyboardButton('Вікенді', callback_data="vikendy")
+    sr5 = InlineKeyboardButton('Лівік', callback_data="livik")
+    sr6 = InlineKeyboardButton('Каракін', callback_data="karakin")
+    sr7 = InlineKeyboardButton('Нуса', callback_data="nusa")
+    markup.add(sr1, sr2, sr3, sr4, sr5, sr6, sr7)
+    return markup
+
+def TR():
+    markup = InlineKeyboardMarkup()
+    sr1 = InlineKeyboardButton('Наземний', callback_data="earth")
+    sr2 = InlineKeyboardButton('Водний', callback_data="water")
+    sr3 = InlineKeyboardButton('Надземний', callback_data="air")
+    sr4 = InlineKeyboardButton('Особливий', callback_data="special")
     markup.add(sr1, sr2, sr3, sr4)
     return markup
 
+def TR1():
+    markup = InlineKeyboardMarkup()
+    sr1 = InlineKeyboardButton('Баггі', callback_data="buggy")
+    sr2 = InlineKeyboardButton('УАЗ', callback_data="uaz")
+    sr3 = InlineKeyboardButton('Dakia', callback_data="dakia")
+    sr13 = InlineKeyboardButton('Coupe RB', callback_data="couperb")
+    sr4 = InlineKeyboardButton('Мотоцикл', callback_data="moto")
+    sr5 = InlineKeyboardButton('3-х колісний мотоцикл', callback_data="moto3")
+    sr6 = InlineKeyboardButton('Фургон', callback_data="bus")
+    sr7 = InlineKeyboardButton('Пікап', callback_data="pickup")
+    sr8 = InlineKeyboardButton('Мірадо', callback_data="mirado")
+    sr9 = InlineKeyboardButton('Роні купе', callback_data="rony")
+    sr10 = InlineKeyboardButton('Снігохід', callback_data="snow")
+    sr11 = InlineKeyboardButton("Тук тук", callback_data="tuktuk")
+    sr12 = InlineKeyboardButton('Скутер', callback_data="scooter")
+    markup.add(sr1, sr2, sr3, sr13, sr4, sr5, sr6, sr7, sr8, sr9, sr10, sr11, sr12)
+    return markup
+
+def TR2():
+    markup = InlineKeyboardMarkup()
+    sr1 = InlineKeyboardButton('PG-117', callback_data="pg117")
+    sr2 = InlineKeyboardButton('Гідроцикл', callback_data="watermoto")
+    markup.add(sr1, sr2)
+    return markup
+
+def TR3():
+    markup = InlineKeyboardMarkup()
+    sr1 = InlineKeyboardButton('Аероплан', callback_data="p1")
+    sr2 = InlineKeyboardButton('C-130', callback_data="p2")
+    markup.add(sr1, sr2)
+    return markup
+
+def TR4():
+    markup = InlineKeyboardMarkup()
+    sr1 = InlineKeyboardButton('Складний велосипед', callback_data="b1")
+    sr2 = InlineKeyboardButton('Двохмісний велосипед', callback_data="b2")
+    markup.add(sr1, sr2)
+    return markup
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     if message.text:
@@ -204,10 +253,14 @@ def conversation(message):
     elif message.text == "Карти🗺":
         bot.send_message(message.chat.id, "Оберіть карту", reply_markup=M())
         print(message.from_user)
+    elif message.text == "Транспорт🚙":
+        bot.send_message(message.chat.id, "Оберіть тип транспорта", reply_markup=TR())
+        print(message.from_user)
+
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     if call.data == "StartTest":
-        bot.send_message(call.from_user.id, "Заходьте за посиланням та вказуйте своє ім'я. https://www.classtime.com/code/QQ86W2")
+        bot.send_message(call.from_user.id, "Заходьте за посиланням та вказуйте своє ім'я. https://www.classtime.com/code/2K8G2M")
     elif call.data == "AR":
         bot.send_message(call.from_user.id, "Оберіть зброю", reply_markup=AR())
     elif call.data == "AUG":
@@ -353,19 +406,10 @@ def callback_query(call):
     elif call.data == "move":
         bot.send_message(call.from_user.id, "У вас виходить контролювати віддачу?", reply_markup=T3())
     elif call.data == "yes":
-        apple = random.uniform(0, 100)
-        if apple < 3:
-            bot.send_message(call.from_user.id, "Найбільше вам підійде яблуко")
         bot.send_message(call.from_user.id, "Найбільше вам підійде штурмова гвинтівка")
     elif call.data == "no":
-        apple = random.uniform(0, 100)
-        if apple < 3:
-            bot.send_message(call.from_user.id, "Найбільше вам підійде яблуко")
         bot.send_message(call.from_user.id, "Найбільше вам підійде пістолет-кулемет")
     elif call.data == "nmove":
-        apple = random.uniform(0, 100)
-        if apple < 3:
-            bot.send_message(call.from_user.id, "Найбільше вам підійде яблуко")
         bot.send_message(call.from_user.id, "Найбільше вам підійде дробовик")
     elif call.data == "mid":
         bot.send_message(call.from_user.id, "По яким об'єктам ви стріляєте?", reply_markup=T22())
@@ -395,6 +439,63 @@ def callback_query(call):
         bot.send_photo(call.from_user.id, "https://d1nglqw9e0mrau.cloudfront.net/assets/images/thumbs/savage-95704938.jpg", caption=config.sanuk, reply_markup=M())
     elif call.data == "vikendy":
         bot.send_photo(call.from_user.id, "https://d1nglqw9e0mrau.cloudfront.net/assets/images/thumbs/vikendi-ce67a32e.jpg", caption=config.vikendy, reply_markup=M())
+    elif call.data == "livik":
+        bot.send_photo(call.from_user.id, "https://i.pinimg.com/736x/95/ef/37/95ef37b207db5b30845c136255892148.jpg", caption=config.livik, reply_markup=M())
+    elif call.data == "karakin":
+        bot.send_photo(call.from_user.id, "https://wallpapercave.com/wp/wp8922822.jpg", caption=config.karakin, reply_markup=M())
+    elif call.data == "nusa":
+        bot.send_photo(call.from_user.id, "https://pbs.twimg.com/media/FcqVd9uaEAA29aM.png:large", caption=config.nusa, reply_markup=M())
+
+    elif call.data == "earth":
+        bot.send_message(call.from_user.id, "Оберіть транспорт", reply_markup=TR1())
+
+    elif call.data == "buggy":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-buggy.jpg", caption=config.buggy, reply_markup=TR1())
+    elif call.data == "uaz":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-uaz.jpg", caption=config.uaz, reply_markup=TR1())
+    elif call.data == "dakia":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-dacia.jpg", caption=config.dacia, reply_markup=TR1())
+    elif call.data == "moto":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-bike2.jpg", caption=config.moto, reply_markup=TR1())
+    elif call.data == "moto3":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-bike.jpg", caption=config.moto3, reply_markup=TR1())
+    elif call.data == "bus":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-van.jpg", caption=config.bus, reply_markup=TR1())
+    elif call.data == "pickup":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-pickup.jpg", caption=config.pickup, reply_markup=TR1())
+    elif call.data == "mirado":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/PUBG-Mirado.jpg", caption=config.mirado, reply_markup=TR1())
+    elif call.data == "rony":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-rony.jpg", caption=config.rony, reply_markup=TR1())
+    elif call.data == "snow":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-snowmobile.jpg", caption=config.snow, reply_markup=TR1())
+    elif call.data == "tuktuk":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/PUBG-Tukshai-1.jpg", caption=config.tuktuk, reply_markup=TR1())
+    elif call.data == "scooter":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/PUBG-Scooter-1.jpg", caption=config.scooter, reply_markup=TR1())
+    elif call.data == "pg117":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-boat.jpg", caption=config.pg117, reply_markup=TR2())
+    elif call.data == "watermoto":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-jetski.jpg", caption=config.watermoto, reply_markup=TR2())
+    elif call.data == "p2":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2018/03/pubg-plane.jpg", caption=config.c130, reply_markup=TR3())
+    elif call.data == "p1":
+        bot.send_photo(call.from_user.id, "https://4pubg.com/wp-content/uploads/2022/01/kak-letat-na-ajeroplane-v-pubg-battlegrounds.jpg", caption=config.p1, reply_markup=TR3())
+    elif call.data == "b1":
+        bot.send_photo(call.from_user.id, "https://static.wikia.nocookie.net/battlegrounds_gamepedia_en/images/2/2d/Mountain_Bike.jpg/revision/latest?cb=20220115042111", caption=config.b1, reply_markup=TR4())
+    elif call.data == "b2":
+        bot.send_photo(call.from_user.id, "https://img.gurugamer.com/resize/740x-/2022/09/23/bicycle-shed-5691.jpg", caption=config.b2, reply_markup=TR4())
+
+    elif call.data == "water":
+        bot.send_message(call.from_user.id, "Оберіть транспорт", reply_markup=TR2())
+    elif call.data == "air":
+        bot.send_message(call.from_user.id, "Оберіть транспорт", reply_markup=TR3())
+    elif call.data == "special":
+        bot.send_message(call.from_user.id, "Оберіть транспорт", reply_markup=TR4())
+
+    elif call.data == "couperb":
+        bot.send_photo(call.from_user.id, "https://i.ytimg.com/vi/lfPfBv6pTW0/maxresdefault.jpg", caption=config.couperb, reply_markup=TR1())
+
 
 
 bot.polling(none_stop=True)
